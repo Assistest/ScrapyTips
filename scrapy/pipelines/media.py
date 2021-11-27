@@ -2,24 +2,26 @@ import functools
 import logging
 from collections import defaultdict
 from inspect import signature
+from typing import List, Tuple
 from warnings import warn
 
 from twisted.internet.defer import Deferred, DeferredList
 from twisted.python.failure import Failure
 
+from scrapy.http.request import Request
+from scrapy.http.response.html import HtmlResponse
 from scrapy.settings import Settings
 from scrapy.utils.datatypes import SequenceExclude
 from scrapy.utils.defer import mustbe_deferred, defer_result
 from scrapy.utils.deprecate import ScrapyDeprecationWarning
-from scrapy.utils.request import request_fingerprint
-from scrapy.utils.misc import arg_to_iter
 from scrapy.utils.log import failure_to_exc_info
+from scrapy.utils.misc import arg_to_iter
+from scrapy.utils.request import request_fingerprint
 
 logger = logging.getLogger(__name__)
 
 
 class MediaPipeline:
-
     LOG_FAILED_RESULTS = True
 
     class SpiderInfo:
@@ -63,9 +65,9 @@ class MediaPipeline:
         class_name = self.__class__.__name__
         formatted_key = f"{class_name.upper()}_{key}"
         if (
-            not base_class_name
-            or class_name == base_class_name
-            or settings and not settings.get(formatted_key)
+                not base_class_name
+                or class_name == base_class_name
+                or settings and not settings.get(formatted_key)
         ):
             return key
         return formatted_key
@@ -115,7 +117,7 @@ class MediaPipeline:
         dfd.addBoth(self._cache_result_and_execute_waiters, fp, info)
         dfd.addErrback(lambda f: logger.error(
             f.value, exc_info=failure_to_exc_info(f), extra={'spider': info.spider})
-        )
+                       )
         return dfd.addBoth(lambda _: wad)  # it must return wad at last
 
     def _make_compatible(self):
@@ -217,23 +219,23 @@ class MediaPipeline:
             defer_result(result).chainDeferred(wad)
 
     # Overridable Interface
-    def media_to_download(self, request, info, *, item=None):
+    def media_to_download(self, request: Request, info: SpiderInfo, *, item: dict = None):
         """Check request before starting download"""
         pass
 
-    def get_media_requests(self, item, info):
+    def get_media_requests(self, item: dict, info: SpiderInfo):
         """Returns the media requests to download"""
         pass
 
-    def media_downloaded(self, response, request, info, *, item=None):
+    def media_downloaded(self, response: HtmlResponse, request: Request, info: SpiderInfo, *, item: dict = None):
         """Handler for success downloads"""
         return response
 
-    def media_failed(self, failure, request, info):
+    def media_failed(self, failure, request: Request, info):
         """Handler for failed downloads"""
         return failure
 
-    def item_completed(self, results, item, info):
+    def item_completed(self, results: List[Tuple], item: dict, info: SpiderInfo):
         """Called per item when all media requests has been processed"""
         if self.LOG_FAILED_RESULTS:
             for ok, value in results:
@@ -246,6 +248,6 @@ class MediaPipeline:
                     )
         return item
 
-    def file_path(self, request, response=None, info=None, *, item=None):
+    def file_path(self, request: Request, response: HtmlResponse = None, info: SpiderInfo = None, *, item: dict = None):
         """Returns the path where downloaded media should be stored"""
         pass

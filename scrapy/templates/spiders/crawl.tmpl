@@ -1,6 +1,7 @@
 import scrapy
 from scrapy.linkextractors import LinkExtractor
 from scrapy.spiders import CrawlSpider, Rule
+from scrapy.http.response.html import HtmlResponse
 
 
 class $classname(CrawlSpider):
@@ -12,7 +13,7 @@ class $classname(CrawlSpider):
         Rule(LinkExtractor(allow=r'Items/'), callback='parse_item', follow=True),
     )
 
-    def parse_item(self, response):
+    def parse(self, response: HtmlResponse, **kwargs):
         item = {}
         #item['domain_id'] = response.xpath('//input[@id="sid"]/@value').get()
         #item['name'] = response.xpath('//div[@id="name"]').get()
