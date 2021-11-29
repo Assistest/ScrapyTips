@@ -8,7 +8,7 @@ from typing import Generator
 from scrapy.spiders import Spider
 from scrapy.crawler import Crawler
 from scrapy.http.request import Request
-from scrapy.http.response.html import HtmlResponse
+from scrapy.http.response import Response
 from $project_name.items import ${ProjectName}Item
 
 # useful for handling different item types with a single interface
@@ -27,14 +27,14 @@ class ${ProjectName}SpiderMiddleware:
         crawler.signals.connect(s.spider_opened, signal=signals.spider_opened)
         return s
 
-    def process_spider_input(self, response: HtmlResponse, spider: Spider):
+    def process_spider_input(self, response: Response, spider: Spider):
         # Called for each response that goes through the spider
         # middleware and into the spider.
 
         # Should return None or raise an exception.
         return None
 
-    def process_spider_output(self, response: HtmlResponse, result: Generator, spider: Spider):
+    def process_spider_output(self, response: Response, result: Generator, spider: Spider):
         # Called with the results returned from the Spider, after
         # it has processed the response.
 
@@ -42,7 +42,7 @@ class ${ProjectName}SpiderMiddleware:
         for i in result:
             yield i
 
-    def process_spider_exception(self, response: HtmlResponse, exception, spider: Spider):
+    def process_spider_exception(self, response: Response, exception, spider: Spider):
         # Called when a spider or process_spider_input() method
         # (from other spider middleware) raises an exception.
 
@@ -86,7 +86,7 @@ class ${ProjectName}DownloaderMiddleware:
         #   installed downloader middleware will be called
         return None
 
-    def process_response(self, request: Request, response: HtmlResponse, spider: Spider):
+    def process_response(self, request: Request, response: Response, spider: Spider):
         # Called with the response returned from the downloader.
 
         # Must either;

@@ -9,6 +9,7 @@ from scrapy.utils.iterators import xmliter, csviter
 from scrapy.utils.spider import iterate_spider_output
 from scrapy.selector import Selector
 from scrapy.exceptions import NotConfigured, NotSupported
+from scrapy.http.response import Response
 
 
 class XMLFeedSpider(Spider):
@@ -42,7 +43,7 @@ class XMLFeedSpider(Spider):
         """
         return response
 
-    def parse_node(self, response, selector):
+    def parse_node(self, response: Response, selector: Selector):
         """This method must be overriden with your custom spider functionality"""
         if hasattr(self, 'parse_item'):  # backward compatibility
             return self.parse_item(response, selector)
@@ -108,11 +109,11 @@ class CSVFeedSpider(Spider):
         """This method has the same purpose as the one in XMLFeedSpider"""
         return results
 
-    def adapt_response(self, response):
+    def adapt_response(self, response: Response):
         """This method has the same purpose as the one in XMLFeedSpider"""
         return response
 
-    def parse_row(self, response, row):
+    def parse_row(self, response: Response, row: dict):
         """This method must be overriden with your custom spider functionality"""
         raise NotImplementedError
 

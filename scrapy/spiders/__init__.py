@@ -11,7 +11,7 @@ from scrapy import signals
 from scrapy.http import Request
 from scrapy.utils.trackref import object_ref
 from scrapy.utils.url import url_is_from_spider
-from scrapy.http.response.html import HtmlResponse
+from scrapy.http.response import Response
 from scrapy.utils.deprecate import method_is_overridden
 
 
@@ -90,7 +90,7 @@ class Spider(object_ref):
     def _parse(self, response, **kwargs):
         return self.parse(response, **kwargs)
 
-    def parse(self, response: HtmlResponse, **kwargs):
+    def parse(self, response: Response, **kwargs):
         raise NotImplementedError(f'{self.__class__.__name__}.parse callback is not defined')
 
     @classmethod

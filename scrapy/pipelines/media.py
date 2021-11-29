@@ -9,7 +9,7 @@ from twisted.internet.defer import Deferred, DeferredList
 from twisted.python.failure import Failure
 
 from scrapy.http.request import Request
-from scrapy.http.response.html import HtmlResponse
+from scrapy.http.response import Response
 from scrapy.settings import Settings
 from scrapy.utils.datatypes import SequenceExclude
 from scrapy.utils.defer import mustbe_deferred, defer_result
@@ -227,7 +227,7 @@ class MediaPipeline:
         """Returns the media requests to download"""
         pass
 
-    def media_downloaded(self, response: HtmlResponse, request: Request, info: SpiderInfo, *, item: dict = None):
+    def media_downloaded(self, response: Response, request: Request, info: SpiderInfo, *, item: dict = None):
         """Handler for success downloads"""
         return response
 
@@ -248,6 +248,6 @@ class MediaPipeline:
                     )
         return item
 
-    def file_path(self, request: Request, response: HtmlResponse = None, info: SpiderInfo = None, *, item: dict = None):
+    def file_path(self, request: Request, response: Response = None, info: SpiderInfo = None, *, item: dict = None):
         """Returns the path where downloaded media should be stored"""
         pass
