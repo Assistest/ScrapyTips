@@ -1,5 +1,5 @@
 import scrapy
-from scrapy.http.response import Response
+from scrapy.http import TextResponse
 
 
 class $classname(scrapy.Spider):
@@ -7,5 +7,5 @@ class $classname(scrapy.Spider):
     allowed_domains = ['$domain']
     start_urls = ['http://$domain/']
 
-    def parse(self, response: Response, **kwargs):
+    def parse(self, response: TextResponse, **kwargs):
         pass

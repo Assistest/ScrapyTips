@@ -1,5 +1,5 @@
 from scrapy.spiders import CSVFeedSpider
-from scrapy.http.response import Response
+from scrapy.http import TextResponse
 
 
 class $classname(CSVFeedSpider):
@@ -10,10 +10,10 @@ class $classname(CSVFeedSpider):
     # delimiter = '\t'
 
     # Do any adaptations you need here
-    #def adapt_response(self, response: Response):
+    #def adapt_response(self, response: TextResponse):
     #    return response
 
-    def parse_row(self, response: Response, row: dict):
+    def parse_row(self, response: TextResponse, row: dict):
         i = {}
         #i['url'] = row['url']
         #i['name'] = row['name']

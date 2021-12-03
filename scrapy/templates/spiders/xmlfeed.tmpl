@@ -1,5 +1,5 @@
 from scrapy.spiders import XMLFeedSpider
-from scrapy.http.response import Response
+from scrapy.http import TextResponse
 from scrapy.selector import Selector
 
 
@@ -10,7 +10,7 @@ class $classname(XMLFeedSpider):
     iterator = 'iternodes' # you can change this; see the docs
     itertag = 'item' # change it accordingly
 
-    def parse_node(self, response: Response, selector: Selector):
+    def parse_node(self, response: TextResponse, selector: Selector):
         item = {}
         #item['url'] = selector.select('url').get()
         #item['name'] = selector.select('name').get()
