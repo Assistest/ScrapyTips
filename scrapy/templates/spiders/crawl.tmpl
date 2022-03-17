@@ -8,12 +8,13 @@ class $classname(CrawlSpider):
     name = '$name'
     allowed_domains = ['$domain']
     start_urls = ['http://$domain/']
+    # handle_httpstatus_list = []
 
     rules = (
         Rule(LinkExtractor(allow=r'Items/'), callback='parse_item', follow=True),
     )
 
-    def parse(self, response: TextResponse, **kwargs):
+    def parse_item(self, response: TextResponse, **kwargs):
         item = {}
         #item['domain_id'] = response.xpath('//input[@id="sid"]/@value').get()
         #item['name'] = response.xpath('//div[@id="name"]').get()

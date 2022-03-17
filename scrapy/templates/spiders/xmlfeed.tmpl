@@ -1,6 +1,6 @@
 from scrapy.spiders import XMLFeedSpider
-from scrapy.http import TextResponse
 from scrapy.selector import Selector
+from scrapy.http import TextResponse
 
 
 class $classname(XMLFeedSpider):
@@ -9,6 +9,7 @@ class $classname(XMLFeedSpider):
     start_urls = ['http://$domain/feed.xml']
     iterator = 'iternodes' # you can change this; see the docs
     itertag = 'item' # change it accordingly
+    # handle_httpstatus_list = []
 
     def parse_node(self, response: TextResponse, selector: Selector):
         item = {}

@@ -8,9 +8,10 @@ class $classname(CSVFeedSpider):
     start_urls = ['http://$domain/feed.csv']
     # headers = ['id', 'name', 'description', 'image_link']
     # delimiter = '\t'
+    # handle_httpstatus_list = []
 
     # Do any adaptations you need here
-    #def adapt_response(self, response: TextResponse):
+    #def adapt_response(self, response):
     #    return response
 
     def parse_row(self, response: TextResponse, row: dict):
