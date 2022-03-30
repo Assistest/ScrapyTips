@@ -7,6 +7,11 @@
 #     https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 
+from os import path
+import logging
+
+
+
 BOT_NAME = '$project_name'
 
 SPIDER_MODULES = ['$project_name.spiders']
@@ -19,6 +24,17 @@ NEWSPIDER_MODULE = '$project_name.spiders'
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = True
 LOG_LEVEL = 'ERROR'
+
+RUN_PATH = path.dirname(path.dirname(path.abspath(__file__)))
+
+# s = logging.StreamHandler()
+# s.setLevel(level=LOG_LEVEL)
+# s.setFormatter(logging.Formatter(
+#     "%(asctime)s [%(module)s] %(levelname)s: %(message)s",
+#     '%Y-%m-%d %H:%M:%S'
+# ))
+# s.setStream
+# logging.getLogger().addHandler(s)
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 #CONCURRENT_REQUESTS = 32
